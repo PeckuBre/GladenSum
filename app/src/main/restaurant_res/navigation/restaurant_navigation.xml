@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/restaurant_navigation"
+    app:startDestination="@id/navigation_restaurant_menu">
+
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_favourites"-->
+<!--        android:name="finki.ukim.mpip.gladensum.ui.favourites.FavouritesFragment"-->
+<!--        android:label="@string/title_favourites"-->
+<!--        tools:layout="@layout/fragment_favourites" />-->
+    <fragment
+        android:id="@+id/navigation_restaurant_orders"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_orders.RestaurantOrdersFragment"
+        android:label="@string/title_restaurant_orders"
+        tools:layout="@layout/fragment_restaurant_orders" >
+        <action
+            android:id="@+id/action_navigation_restaurant_orders_to_displayOrderRestaurantFragment"
+            app:destination="@id/displayOrderRestaurantFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_restaurant_menu"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_menu.MenuFragment"
+        android:label="@string/title_restaurant_menu"
+        tools:layout="@layout/fragment_restaurant_menu" >
+        <action
+            android:id="@+id/action_navigation_restaurant_menu_to_navigation_restaurant_account"
+            app:destination="@id/navigation_restaurant_account" />
+        <action
+            android:id="@+id/action_navigation_restaurant_menu_to_navigation_restaurant_orders"
+            app:destination="@id/navigation_restaurant_orders" />
+        <action
+            android:id="@+id/action_navigation_restaurant_menu_to_navigation_add_item_to_menu"
+            app:destination="@id/navigation_add_item_to_menu" />
+        <action
+            android:id="@+id/action_navigation_restaurant_menu_to_showRestaurantItemFragment"
+            app:destination="@id/showRestaurantItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_restaurant_account"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_account.RestaurantAccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_restaurant_account" />
+
+    <fragment
+        android:id="@+id/navigation_add_item_to_menu"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_menu.AddItemFragment"
+        android:label="Add Item"
+        tools:layout="@layout/fragment_add_item_to_menu" />
+    <fragment
+        android:id="@+id/showRestaurantItemFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_menu.EditRestaurantItemFragment"
+        android:label="Edit Item"
+        tools:layout="@layout/show_restaurant_item_fragment" >
+        <argument
+            android:name="item"
+            app:argType="finki.ukim.mpip.gladensum.classes.MenuItem" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayOrderRestaurantFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_orders.DisplayOrderRestaurantFragment"
+        android:label="fragment_display_order_restaurant"
+        tools:layout="@layout/fragment_display_order_restaurant" />
+
+</navigation>

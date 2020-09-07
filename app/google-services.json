@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "535845617832",
+    "firebase_url": "https://gladen-sum.firebaseio.com",
+    "project_id": "gladen-sum",
+    "storage_bucket": "gladen-sum.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535845617832:android:b520ceca084e96aca8c29d",
+        "android_client_info": {
+          "package_name": "finki.ukim.mpip.gladensum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535845617832-fdtlao78st8g06qas35rudu16judm72j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAouMxVlv1JVOY7Hewsf0M6RHkJz_ycDzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535845617832-fdtlao78st8g06qas35rudu16judm72j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

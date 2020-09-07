@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Gladen Sum</string>
+    <string name="title_home">Home</string>
+    <string name="title_favourites">Favourites</string>
+    <string name="title_orders">Orders</string>
+    <string name="title_account">Account</string>
+    <string name="facebook_application_id" translatable="false">705665383341104</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb705665383341104</string>
+    <string name="basic_user_name">Basic User</string>
+    <string name="driver_user_name">Driver</string>
+    <string name="restaurant_user_name">Restaurant</string>
+    <string name="picker_label_text">Choose your user type</string>
+    <string name="picker_next_text">Next Step</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="orders">Orders</string>
+    <string name="favourites">Favourites</string>
+    <string name="help">Help</string>
+    <string name="support">Support</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="title_restaurant_menu">Menu</string>
+    <string name="title_restaurant_drivers">Drivers</string>
+    <string name="title_restaurant_orders">Orders</string>
+
+    <!-- TO DO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_restaurants">Restaurants</string>
+    <string name="search_restaurants_title">Search Restaurants</string>
+    <string name="view_cart_title">View Cart</string>
+    <string name="address">Address</string>
+    <string name="base_restaurant_images">restaurant_images/</string>
+</resources>

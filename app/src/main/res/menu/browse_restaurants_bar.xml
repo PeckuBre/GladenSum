@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search_restaurants_title"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+<!--    <item-->
+<!--        android:id="@+id/action_view_cart"-->
+<!--        android:icon="@drawable/ic_shopping_cart"-->
+<!--        android:title="@string/view_cart_title"-->
+<!--        app:showAsAction="always"/>-->
+
+<!--    <item-->
+<!--        android:id="@+id/action_favorite"-->
+<!--        android:icon="@drawable/googleg_standard_color_18"-->
+<!--        android:title="Nekoj action"-->
+<!--        app:showAsAction="ifRoom"/>-->
+
+    <!-- Settings, should always be in the overflow -->
+<!--    <item android:id="@+id/action_settings"-->
+<!--        android:title="@string/action_settings"-->
+<!--        app:showAsAction="never"/>-->
+
+</menu>
