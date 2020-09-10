@@ -8,12 +8,12 @@
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_favourites"-->
-<!--        android:name="finki.ukim.mpip.gladensum.ui.favourites.FavouritesFragment"-->
+<!--        android:name="finki.ukim.mpip.gladensum.ui.viewModels.FavouritesFragment"-->
 <!--        android:label="@string/title_favourites"-->
 <!--        tools:layout="@layout/fragment_favourites" />-->
     <fragment
         android:id="@+id/navigation_restaurant_orders"
-        android:name="finki.ukim.mpip.gladensum.ui.restaurant_orders.RestaurantOrdersFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_fragments.RestaurantOrdersFragment"
         android:label="@string/title_restaurant_orders"
         tools:layout="@layout/fragment_restaurant_orders" >
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_restaurant_menu"
-        android:name="finki.ukim.mpip.gladensum.ui.restaurant_menu.MenuFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_fragments.MenuFragment"
         android:label="@string/title_restaurant_menu"
         tools:layout="@layout/fragment_restaurant_menu" >
         <action
@@ -42,18 +42,18 @@
 
     <fragment
         android:id="@+id/navigation_restaurant_account"
-        android:name="finki.ukim.mpip.gladensum.ui.restaurant_account.RestaurantAccountFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_fragments.RestaurantAccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_restaurant_account" />
 
     <fragment
         android:id="@+id/navigation_add_item_to_menu"
-        android:name="finki.ukim.mpip.gladensum.ui.restaurant_menu.AddItemFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_fragments.AddItemFragment"
         android:label="Add Item"
         tools:layout="@layout/fragment_add_item_to_menu" />
     <fragment
         android:id="@+id/showRestaurantItemFragment"
-        android:name="finki.ukim.mpip.gladensum.ui.restaurant_menu.EditRestaurantItemFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_fragments.EditRestaurantItemFragment"
         android:label="Edit Item"
         tools:layout="@layout/show_restaurant_item_fragment" >
         <argument
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/displayOrderRestaurantFragment"
-        android:name="finki.ukim.mpip.gladensum.ui.restaurant_orders.DisplayOrderRestaurantFragment"
+        android:name="finki.ukim.mpip.gladensum.ui.restaurant_fragments.DisplayOrderRestaurantFragment"
         android:label="fragment_display_order_restaurant"
         tools:layout="@layout/fragment_display_order_restaurant" />
 

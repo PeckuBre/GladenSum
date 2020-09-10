@@ -33,7 +33,7 @@ android {
     }
     sourceSets {
         main {
-            res.srcDirs = ['src/main/res', 'src/main/res/restaurant_layouts', 'src/main/res/restaurant_layout', 'src/main/restaurant_res']
+            res.srcDirs = ['src/main/res', 'src/main/res/restaurant_layouts', 'src/main/res/restaurant_layout', 'src/main/restaurant_res','src/main/driver_res']
         }
     }
 }

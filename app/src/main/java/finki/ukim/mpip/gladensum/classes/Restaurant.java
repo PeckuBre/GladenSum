@@ -1,7 +1,9 @@
 package finki.ukim.mpip.gladensum.classes;
 
+import java.util.HashMap;
+
 public class Restaurant extends AppUser {
-    public String name,address,phone_number,website,places_id,id;
+    public String name,address,phone_number,website,id;
     public Menu menu;
 
     public Restaurant() {
@@ -12,6 +14,18 @@ public class Restaurant extends AppUser {
         super(type, id);
     }
 
-    //    public void setMenu(HashMap<String ,Category> a){menu=new Menu(a);}
+    public Restaurant(String type, String name, String id, String phone_number,String website) {
+        super(type, name, id, phone_number);
+        this.website=website;
+        menu=new Menu();
+    }
+
     public void setMenu(Menu a){menu=a;}
+
+    @Override
+    public HashMap<String, Object> getKeyValuePairs() {
+        HashMap<String, Object> map= super.getKeyValuePairs();
+        map.put("website",website);
+        return map;
+    }
 }

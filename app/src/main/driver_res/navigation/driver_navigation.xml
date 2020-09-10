@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/driver_navigation"
+    app:startDestination="@id/navigation_driver_orders">
+
+    <fragment
+        android:id="@+id/navigation_driver_orders"
+        android:name="finki.ukim.mpip.gladensum.ui.driver_fragments.DriverAvailableOrdersFragment"
+        android:label="driver_available_orders_fragment"
+        tools:layout="@layout/driver_available_orders_fragment" >
+        <action
+            android:id="@+id/action_driverAvailableOrdersFragment_to_showTakenOrdersOnMapFragment"
+            app:destination="@id/navigation_driver_orders_map" />
+        <action
+            android:id="@+id/action_driverAvailableOrdersFragment_to_driverAccountFragment"
+            app:destination="@id/navigation_driver_account" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_driver_orders_map"
+        android:name="finki.ukim.mpip.gladensum.ui.driver_fragments.ShowTakenOrdersOnMapFragment"
+        android:label="fragment_show_taken_orders_on_map"
+        tools:layout="@layout/fragment_show_taken_orders_on_map" />
+    <fragment
+        android:id="@+id/navigation_driver_account"
+        android:name="finki.ukim.mpip.gladensum.ui.driver_fragments.DriverAccountFragment"
+        android:label="fragment_driver_account"
+        tools:layout="@layout/fragment_driver_account" />
+</navigation>

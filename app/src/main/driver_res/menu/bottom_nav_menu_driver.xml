@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_driver_orders"
+        android:icon="@drawable/room_service_24px"
+        android:title="@string/title_orders" />
+    <item
+        android:id="@+id/navigation_driver_orders_map"
+        android:icon="@drawable/room_24px"
+        android:title="@string/orders_map" />
+    <item
+        android:id="@+id/navigation_driver_account"
+        android:icon="@drawable/account_box_24px"
+        android:title="@string/title_account" />
+
+</menu>

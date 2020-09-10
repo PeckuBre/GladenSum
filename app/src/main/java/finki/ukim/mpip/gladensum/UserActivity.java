@@ -1,22 +1,11 @@
 package finki.ukim.mpip.gladensum;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,18 +15,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.Arrays;
-import java.util.Calendar;
 
-import finki.ukim.mpip.gladensum.classes.AppUser;
-import finki.ukim.mpip.gladensum.classes.Order;
-import finki.ukim.mpip.gladensum.ui.home.HomeViewModel;
+import finki.ukim.mpip.gladensum.viewModels.UserViewModel;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -47,10 +32,10 @@ public class UserActivity extends AppCompatActivity {
     protected FirebaseFirestore db;
     private AppBarConfiguration appBarConfiguration;
     private Toolbar toolbar;
-    private AppUser appUser;
-    private HomeViewModel viewModel;
+    private UserViewModel viewModel;
 
     // TODO: LOCIRAJ GI SITE RESTORANI VO BLIZINA. ONIE KOI KE IMAAT MENI STAVI GI NAJGORE, OSTANATITE SORTIRAJ GI SPORED REJTING
+    // lajkce
 
 
     @Override
@@ -61,7 +46,7 @@ public class UserActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         setLayout();
         initNavigation();
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
     }
 
@@ -74,20 +59,20 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void initNavigation() {
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        BottomNavigationView navView = findViewById(R.id.nav_view_driver);
+        // Passing each bottom_nav_menu_driver ID as a set of Ids because each
+        // bottom_nav_menu_driver should be considered as top level destinations.
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_favourites, R.id.navigation_orders, R.id.navigation_account)
+                R.id.navigation_home, R.id.navigation_favourites, R.id.navigation_driver_orders, R.id.navigation_driver_account)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_driver_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_driver_fragment);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
@@ -139,7 +124,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void goToOrderFragment() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_driver_fragment);
         if (navController.getCurrentDestination().getId() == R.id.showOrderFragment)
             return;
         navController.navigate(R.id.showOrderFragment);
@@ -157,7 +142,7 @@ public class UserActivity extends AppCompatActivity {
             return false;
         });
 
-//        android.view.MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+//        android.view.MenuItem searchItem = bottom_nav_menu_driver.findItem(R.id.app_bar_search);
 
         // Configure the search info and add any event listeners...
 

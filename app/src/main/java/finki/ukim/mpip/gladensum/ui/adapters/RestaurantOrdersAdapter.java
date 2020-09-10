@@ -18,7 +18,7 @@ import java.util.List;
 
 import finki.ukim.mpip.gladensum.R;
 import finki.ukim.mpip.gladensum.classes.Order;
-import finki.ukim.mpip.gladensum.ui.restaurant_orders.DisplayOrderRestaurantFragment;
+import finki.ukim.mpip.gladensum.ui.restaurant_fragments.DisplayOrderRestaurantFragment;
 
 public class RestaurantOrdersAdapter extends RecyclerView.Adapter<RestaurantOrdersAdapter.ViewHolder> {
 
@@ -56,7 +56,7 @@ public class RestaurantOrdersAdapter extends RecyclerView.Adapter<RestaurantOrde
     public void onBindViewHolder(@NonNull RestaurantOrdersAdapter.ViewHolder holder, int position) {
         Order o=orders.get(position);
         if(o.address!=null)
-        holder.address.setText(o.address.toString());
+        holder.address.setText(o.address);
         else
             holder.address.setText("NULL");
         holder.date.setText(orders.get(position).time.toDate().toString());

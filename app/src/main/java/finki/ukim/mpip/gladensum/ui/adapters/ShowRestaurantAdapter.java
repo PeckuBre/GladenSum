@@ -1,32 +1,22 @@
 package finki.ukim.mpip.gladensum.ui.adapters;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import finki.ukim.mpip.gladensum.R;
 import finki.ukim.mpip.gladensum.classes.Restaurant;
-import finki.ukim.mpip.gladensum.ui.home.HomeFragment;
+import finki.ukim.mpip.gladensum.ui.user_fragments.HomeFragment;
 
 public class ShowRestaurantAdapter extends BaseAdapter {
 
@@ -82,33 +72,4 @@ public class ShowRestaurantAdapter extends BaseAdapter {
             });
             return convertView;
         }
-
-//    @Override
-//    public View getView(final int position, View convertView, final ViewGroup parent)
-//    {
-//        if (convertView == null) {
-//            convertView = mInflater.inflate(R.layout.gridchild, parent, false);
-//            Button btn =  (Button)convertView.findViewById(R.id.btnCountry);
-//            btn.setOnClickListener(new Button.OnClickListener(){
-//                public void onClick(View v) {
-//                    String name = ((Button)v).getTag().toString();
-//                    if(name != ""){
-//                        Toast.makeText(context, name, Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            });
-//        }
-//        Country country = items.get(position);
-//
-//        Button btn = (Button)convertView.findViewById(R.id.btnCountry);
-//        btn.setText(country.Name);
-//        btn.setTag(country.Name);
-//
-//        ImageView image = (ImageView)convertView.findViewById(R.id.imgCountry);
-//        image.setImageResource(country.Flag);
-//
-//        return convertView;
-//    }
-
-
 }

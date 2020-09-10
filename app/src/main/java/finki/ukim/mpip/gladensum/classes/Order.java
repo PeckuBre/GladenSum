@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -165,4 +166,10 @@ public class Order implements Serializable {
     public void changeOrderTime(){
         time=Timestamp.now();
     }
+
+    public void uploadOrder(){
+        //TODO: mozebi ke treba da se smeni
+        FirebaseFirestore.getInstance().collection("orders").document(id).set(this);
+    }
+
 }

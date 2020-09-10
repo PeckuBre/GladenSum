@@ -1,15 +1,12 @@
 package finki.ukim.mpip.gladensum.ui.adapters;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,14 +16,14 @@ import finki.ukim.mpip.gladensum.R;
 import finki.ukim.mpip.gladensum.classes.MenuItem;
 import finki.ukim.mpip.gladensum.classes.Order;
 import finki.ukim.mpip.gladensum.classes.OrderItem;
-import finki.ukim.mpip.gladensum.ui.home.HomeViewModel;
-import finki.ukim.mpip.gladensum.ui.home.ShowMenuItemFragment;
+import finki.ukim.mpip.gladensum.viewModels.UserViewModel;
+import finki.ukim.mpip.gladensum.ui.user_fragments.ShowMenuItemFragment;
 
 public class ShowOrderToUserAdapter extends RecyclerView.Adapter<ShowOrderToUserAdapter.ViewHolder> {
 
     private Order order;
     private HashMap<String, MenuItem> menuItems;
-    private HomeViewModel viewModel;
+    private UserViewModel viewModel;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -49,7 +46,7 @@ public class ShowOrderToUserAdapter extends RecyclerView.Adapter<ShowOrderToUser
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ShowOrderToUserAdapter(Order order, HashMap<String, MenuItem> menuItems, HomeViewModel viewModel) {
+    public ShowOrderToUserAdapter(Order order, HashMap<String, MenuItem> menuItems, UserViewModel viewModel) {
         this.order = order;
         this.menuItems = menuItems;
         this.viewModel=viewModel;

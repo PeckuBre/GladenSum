@@ -1,14 +1,11 @@
 package finki.ukim.mpip.gladensum.ui.small_fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import finki.ukim.mpip.gladensum.R;
-import finki.ukim.mpip.gladensum.ui.home.HomeViewModel;
+import finki.ukim.mpip.gladensum.viewModels.UserViewModel;
 
 
 public class Counter extends Fragment {
@@ -40,7 +37,7 @@ public class Counter extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListener= ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+        mListener= ViewModelProviders.of(getActivity()).get(UserViewModel.class);
 
     }
 
