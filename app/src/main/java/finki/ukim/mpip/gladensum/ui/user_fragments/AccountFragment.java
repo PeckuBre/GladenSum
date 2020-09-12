@@ -52,12 +52,7 @@ public class AccountFragment extends Fragment {
         Button b = root.findViewById(R.id.sign_out_button);
         b.setOnClickListener(v -> goToSignInMenu());
         Button pickDefaultAddress=root.findViewById(R.id.pick_default_address_btn);
-        pickDefaultAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.navigation_pick_default_address);
-            }
-        });
+        pickDefaultAddress.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigation_pick_default_address));
 
         return root;
     }
@@ -82,12 +77,6 @@ public class AccountFragment extends Fragment {
                 getActivity().setContentView(R.layout.loading_screen);
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 FirebaseFirestore db=FirebaseFirestore.getInstance();
-//                if (user != null) {
-//                    if(!FirebaseFirestore.getInstance().collection("app_users").document(user.getUid()).get().isSuccessful()){
-//                    Intent intent = new Intent(getContext(), AddAccDetailsActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    startActivity(intent);}
-//                }
                 try {
                     Log.d("userIDDDDDDDD",user.getUid());
                     if (user != null) {
@@ -116,14 +105,11 @@ public class AccountFragment extends Fragment {
                                 getActivity().finishAffinity();
                                 startActivity(intent);
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                e.printStackTrace();
-                                Intent intent=new Intent(getContext(),UserActivity.class);
-                            getActivity().finishAffinity();
-                            startActivity(intent);
-                            }
+                        }).addOnFailureListener(e -> {
+                            e.printStackTrace();
+                            Intent intent=new Intent(getContext(),UserActivity.class);
+                        getActivity().finishAffinity();
+                        startActivity(intent);
                         });
                     } else {
 
