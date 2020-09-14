@@ -49,9 +49,9 @@ public class ShowMenuItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             item = (MenuItem) getArguments().getSerializable(ARG_ITEM);
-            if (getArguments().getSerializable("order_item") != null){
+            if (getArguments().getSerializable("order_item") != null) {
                 orderItem = (OrderItem) getArguments().getSerializable(ARG_ORDER_ITEM);
-                position=getArguments().getInt("position");
+                position = getArguments().getInt("position");
             }
         }
         viewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
@@ -79,11 +79,10 @@ public class ShowMenuItemFragment extends Fragment {
 
 
         add.setOnClickListener(v1 -> {
-            if(orderItem!=null){
-                viewModel.changeOrderItemAt(new OrderItem(item.id,item.name, comment.getText().toString(), quantity), position);
-            }
-            else
-            viewModel.addToOrder(new OrderItem(item.id,item.name, comment.getText().toString(), quantity), item.restaurant_id);
+            if (orderItem != null) {
+                viewModel.changeOrderItemAt(new OrderItem(item.id, item.name, comment.getText().toString(), quantity), position);
+            } else
+                viewModel.addToOrder(new OrderItem(item.id, item.name, comment.getText().toString(), quantity), item.restaurant_id);
             counterFragment.setCount(0);
             Navigation.findNavController(v).popBackStack();
         });

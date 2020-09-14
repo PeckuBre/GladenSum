@@ -51,6 +51,7 @@ public class ShowRestaurantAdapter extends BaseAdapter {
                 convertView.setOnClickListener(v -> {
                     Bundle args=new Bundle();
                     args.putString("restaurant_id",dataset.get(position).id);
+                    args.putString("places_id",dataset.get(position).places_id);
                     Navigation.findNavController(parentFragment.getView()).navigate(R.id.show_menu_to_user,args);
                 });
             }

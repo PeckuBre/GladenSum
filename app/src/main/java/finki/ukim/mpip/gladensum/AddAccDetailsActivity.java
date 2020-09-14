@@ -227,7 +227,7 @@ public class AddAccDetailsActivity extends AppCompatActivity {
         TextView driverNumber = findViewById(R.id.telefon_vozac_tb);
         if (driverNumber.getText().toString().matches("[0-9]+")) {
             Intent intent = new Intent(getApplicationContext(), DriverActivity.class);
-            Driver driver = new Driver("driver", user.getDisplayName(), user.getUid(), restaurant_id, driverNumber.getText().toString());
+            Driver driver = new Driver("Driver", user.getDisplayName(), user.getUid(), restaurant_id, driverNumber.getText().toString());
             db.collection("app_users").document(user.getUid()).set(driver.getKeyValuePairs()).addOnSuccessListener(aVoid -> {
                 finishAffinity();
                 startActivity(intent);

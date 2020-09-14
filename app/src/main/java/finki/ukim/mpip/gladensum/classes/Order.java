@@ -21,6 +21,10 @@ import java.util.Objects;
 public class Order implements Serializable {
 
 
+    public void setResponsibleDriver(String  driver_id) {
+        this.responsible_driver=driver_id;
+    }
+
     public static enum STATUS {
         CANCELED,POSTED, OPENED, PREPARED, ON_THE_WAY, COMPLETED
     }
@@ -34,6 +38,7 @@ public class Order implements Serializable {
     public List<OrderItem> items;
     public STATUS status;
     public Timestamp time;
+    public String responsible_driver;
 
     public Order() {
         this.items = new ArrayList<>();
@@ -102,10 +107,10 @@ public class Order implements Serializable {
 
     public String proceed() {
         switch (status) {
-            case OPENED:
-                status = STATUS.POSTED;
-                break;
             case POSTED:
+                status = STATUS.OPENED;
+                break;
+            case OPENED:
                 status = STATUS.PREPARED;
                 break;
             case PREPARED:

@@ -34,21 +34,29 @@ public class DriverAvailableOrdersFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this.getActivity()).get(DriverViewModel.class);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.driver_available_orders_fragment, container, false);
+        View root = inflater.inflate(R.layout.driver_available_orders_fragment, container, false);
+
+        RecyclerView rw = root.findViewById(R.id.orders_rw);
+        viewModel.getReadyOrders().observe(getViewLifecycleOwner(), orders -> {
+            rw.setHasFixedSize(false);
+            rw.setLayoutManager(new LinearLayoutManager(getContext()));
+            rw.setAdapter(new ShowReadyOrdersToDriverAdapter(orders,viewModel.getDriver(),viewModel));
+        });
+        return root;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(this.getActivity()).get(DriverViewModel.class);
-        RecyclerView rw=getView().findViewById(R.id.orders_rw);
-        viewModel.getReadyOrders().observe(getViewLifecycleOwner(), orders -> {
-            rw.setHasFixedSize(false);
-            rw.setLayoutManager(new LinearLayoutManager(getContext()));
-            rw.setAdapter(new ShowReadyOrdersToDriverAdapter(viewModel));
-        });
+
     }
 
 

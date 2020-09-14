@@ -8,7 +8,7 @@
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_favourites"-->
-<!--        android:name="finki.ukim.mpip.gladensum.ui.viewModels.FavouritesFragment"-->
+<!--        android:name="finki.ukim.mpip.gladensum.ui.user_fragments.FavouritesFragment"-->
 <!--        android:label="@string/title_favourites"-->
 <!--        tools:layout="@layout/fragment_favourites" />-->
     <fragment

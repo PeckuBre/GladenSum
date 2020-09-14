@@ -50,7 +50,10 @@ public class AccountFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
         final TextView textView = root.findViewById(R.id.text_account);
         Button b = root.findViewById(R.id.sign_out_button);
+
         b.setOnClickListener(v -> goToSignInMenu());
+
+
         Button pickDefaultAddress=root.findViewById(R.id.pick_default_address_btn);
         pickDefaultAddress.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigation_pick_default_address));
 
@@ -128,13 +131,4 @@ public class AccountFragment extends Fragment {
 
         }
     }
-
-
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        mViewModel = ViewModelProviders.of(this).get(RestaurantOrdersViewModel.class);
-//        // TODO: Use the ViewModel
-//    }
-
 }

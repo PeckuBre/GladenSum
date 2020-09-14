@@ -58,9 +58,7 @@ public class ShowOrderUserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_show_order, container, false);
-        Button completeOrder = v.findViewById(R.id.complete_order_button);
         totalCost = v.findViewById(R.id.total_order_cost);
         totalCost.setText("Order is empty");
         recyclerView = v.findViewById(R.id.show_order_items);
@@ -80,7 +78,7 @@ public class ShowOrderUserFragment extends Fragment {
             totalCost.setText(String.format("Total: %.2f MKD", newCost));
             initRecyclerView(order);
         });
-        completeOrder = v.findViewById(R.id.complete_order_button);
+        Button completeOrder = v.findViewById(R.id.complete_order_button);
         completeOrder.setOnClickListener(v1 -> {
 
             if (ContextCompat.checkSelfPermission(
@@ -89,8 +87,7 @@ public class ShowOrderUserFragment extends Fragment {
                     getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) ==
                     PackageManager.PERMISSION_GRANTED) {
                 finishOrder(true);
-            }
-            else {
+            } else {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
             }
             Navigation.findNavController(v).navigateUp();
@@ -102,11 +99,10 @@ public class ShowOrderUserFragment extends Fragment {
     @SuppressLint("MissingPermission")
     private void finishOrder(boolean location_granted) {
         Order o = viewModel.getCurrentOrder().getValue();
-        if (!location_granted) {
+        if (!location_granted)
             finishOrderWithoutLocation(o);
-            return;
-        }
-        afterLocationTurnedOnCallback(o);
+        else
+            afterLocationTurnedOnCallback(o);
     }
 
 
@@ -132,7 +128,6 @@ public class ShowOrderUserFragment extends Fragment {
                 } catch (NullPointerException | IOException e) {
                     e.printStackTrace();
                 }
-
                 FirebaseFirestore.getInstance().collection("orders").add(o).addOnCompleteListener(task -> viewModel.deleteOrder());
             }
         }).addOnFailureListener(e -> {

@@ -30,15 +30,6 @@ public class RestaurantActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
-//        StorageReference storage = FirebaseStorage.getInstance().getReference();
-//        StorageReference ref
-//                = storage
-//                .child(
-//                        "restaurant_images/"
-//                                + FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        ref.getBytes(Integer.MAX_VALUE).addOnSuccessListener(byteArray -> {
-//            restaurantImageBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-//        });
     }
 
 

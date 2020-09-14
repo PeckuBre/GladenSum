@@ -33,28 +33,36 @@ import finki.ukim.mpip.gladensum.ui.small_fragments.Counter;
 
 public class UserViewModel extends ViewModel implements Counter.OnCounterChangedListner {
 
-    private MutableLiveData<Integer> counterCount;
-    private MutableLiveData<HashMap<String, Restaurant>> restaurantsMap;
-    private FirebaseFirestore db;
+
     private MutableLiveData<HashMap<String, Menu>> menus;
     private MutableLiveData<Set<Order>> orders;
     private MutableLiveData<Menu> lastShownMenu;
     private MutableLiveData<Order> currentOrder;
+
+    private MutableLiveData<HashMap<String, Restaurant>> restaurantsMap;//????
+
+    private MutableLiveData<Integer> counterCount;
     private FirebaseUser user;
+    private FirebaseFirestore db;
 
     public UserViewModel() {
         user = FirebaseAuth.getInstance().getCurrentUser();
-        counterCount = new MutableLiveData<>(0);
-        lastShownMenu = new MutableLiveData<>();
+        db = FirebaseFirestore.getInstance();
+        lastShownMenu = new MutableLiveData<>();//string od id na restoranot
         restaurantsMap = new MutableLiveData<>();
         currentOrder = new MutableLiveData<>();
-        TreeSet<Order> orders_set=new TreeSet<>((o1, o2) -> o2.time.compareTo(o1.time));
-        orders = new MutableLiveData<>(orders_set);
-        menus = new MutableLiveData<>();
-        menus.setValue(new HashMap<>());
-        db = FirebaseFirestore.getInstance();
-        HashMap<String, Restaurant> restaurantss = new HashMap<String, Restaurant>();
-        ArrayList<Restaurant> restaurantList = new ArrayList<>();
+        menus = new MutableLiveData<>(new HashMap<>());
+
+        counterCount = new MutableLiveData<>(0);//da ne se upotrebuva vaka
+
+        loadRestaurants();
+        loadOrders();
+
+    }
+
+    public void loadRestaurants() {
+        HashMap<String, Restaurant> restaurantss = new HashMap<>();
+        restaurantsMap.setValue(restaurantss);
         db.collection("app_users").whereEqualTo("type", "Restaurant").addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 e.printStackTrace();
@@ -67,48 +75,73 @@ public class UserViewModel extends ViewModel implements Counter.OnCounterChanged
                 restaurantsMap.setValue(restaurantss);
             }
         });
-
-        db.collection("orders").whereEqualTo("user_id",user.getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if(e!=null){
-                    e.printStackTrace();
-                }
-                else {
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        String TAG="tip:";
-                        Order a=doc.getDocument().toObject(Order.class);
-                        switch (doc.getType()) {
-                            case ADDED:
-                                a.id=doc.getDocument().getId();
-                                orders_set.add(a);
-                                break;
-                            case MODIFIED:
-                                Log.d("MODIFIED",a.toString());
-                                break;
-                            case REMOVED:
-//                                categories.get(item.category).removeItem(item);
-                                Log.d(TAG, "Removed item: " + doc.getDocument().getData());
-                                break;
-                        }
-                    }
-                    orders.setValue(orders_set);
-                }
-            }
-        });
-
     }
 
-    public void addToOrder(OrderItem orderItem, String restaurant_id) {
+    public void loadMenuForRestaurant(Restaurant restaurant) {
+        HashMap<String, Menu> map = menus.getValue();
+        if (map.containsKey(restaurant.places_id)) {
+            lastShownMenu.setValue(map.get(restaurant.places_id));
+            menus.setValue(menus.getValue());
+            return;
+        }
+        db.collection("items").whereEqualTo("restaurant_id", restaurant.places_id).
+                addSnapshotListener((queryDocumentSnapshots, e) -> {
+                    if (e != null)
+                        e.printStackTrace();
+                    else {
+                        Menu menu = new Menu();
+                        menu.restaurant_id = restaurant.id;
+                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                            MenuItem item = doc.toObject(MenuItem.class);
+                            item.id = doc.getId();
+                            menu.addItem(item);
+                        }
+                        map.put(restaurant.places_id, menu);
+                        menus.setValue(map);
+                        lastShownMenu.setValue(menu);
+                    }
+                });
+    }
+
+    public void loadOrders() {
+        TreeSet<Order> orders_set = new TreeSet<>((o1, o2) -> o2.time.compareTo(o1.time));
+        orders = new MutableLiveData<>(orders_set);
+        db.collection("orders").whereEqualTo("user_id", user.getUid()).addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if (e != null) {
+                e.printStackTrace();
+            } else {
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    String TAG = "tip:";
+                    Order a = doc.getDocument().toObject(Order.class);
+                    switch (doc.getType()) {
+                        case ADDED:
+                            a.id = doc.getDocument().getId();
+                            orders_set.add(a);
+                            break;
+                        case MODIFIED:
+                            Log.d("MODIFIED", a.toString());
+                            break;
+                        case REMOVED:
+//                                categories.get(item.category).removeItem(item);
+                            Log.d(TAG, "Removed item: " + doc.getDocument().getData());
+                            break;
+                    }
+                }
+                orders.setValue(orders_set);
+            }
+        });
+    }
+
+    public void addToOrder(OrderItem orderItem, String places_id) {
         if (orderItem.qty <= 0)
             return;
         Order order = currentOrder.getValue();
         if (order == null) {
-            order = new Order(restaurant_id);
+            order = new Order(places_id);
             order.addOrderItem(orderItem);
-        } else if (!order.restaurant_id.equals(restaurant_id)) {
+        } else if (!order.restaurant_id.equals(places_id)) {
             Log.d("addToOrder", "DRUG RESTORAN");
-            order = new Order(restaurant_id);
+            order = new Order(places_id);
             order.addOrderItem(orderItem);
         } else
             order.addOrderItem(orderItem);
@@ -126,8 +159,8 @@ public class UserViewModel extends ViewModel implements Counter.OnCounterChanged
         currentOrder.setValue(order);
     }
 
-    public void removeOrderItemAt(int position){
-        Order order=currentOrder.getValue();
+    public void removeOrderItemAt(int position) {
+        Order order = currentOrder.getValue();
         order.items.remove(position);
         currentOrder.setValue(order);
     }
@@ -136,32 +169,6 @@ public class UserViewModel extends ViewModel implements Counter.OnCounterChanged
         return currentOrder;
     }
 
-    public void readMenuForRestaurant(String id) {
-        HashMap<String, Menu> map = menus.getValue();
-        if (map.containsKey(id)) {
-            lastShownMenu.setValue(map.get(id));
-            menus.setValue(menus.getValue());
-            return;
-        }
-        Menu menu = new Menu();
-        db.collection("Items").whereEqualTo("restaurant_id", id).
-                addSnapshotListener((queryDocumentSnapshots, e) -> {
-                    if (e != null)
-                        e.printStackTrace();
-                    else {
-                        Menu menu1 = new Menu();
-                        menu1.restaurant_id = id;
-                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                            MenuItem item = doc.toObject(MenuItem.class);
-                            item.id = doc.getId();
-                            menu1.addItem(item);
-                        }
-                        map.put(id, menu1);
-                        menus.postValue(map);
-                        lastShownMenu.setValue(menu1);
-                    }
-                });
-    }
 
     public ArrayList<Restaurant> getRestaurantsThatStartWith(String str) {
         return restaurantsMap.getValue().values().stream().filter(x -> x.name.toLowerCase().
@@ -188,7 +195,7 @@ public class UserViewModel extends ViewModel implements Counter.OnCounterChanged
         return new MutableLiveData<>(restaurantsMap.getValue().get(id));//?????????? ne pipaj ako raboti
     }
 
-    public LiveData<Set<Order>> getPreviousOrders(){
+    public LiveData<Set<Order>> getPreviousOrders() {
         return orders;
     }
 

@@ -25,6 +25,7 @@ import finki.ukim.mpip.gladensum.viewModels.UserViewModel;
 public class ShowMenuFragment extends Fragment {
 
     private String restaurantId;
+    private String placesId;
     private Restaurant restaurant;
     private Menu menu;
     private UserViewModel viewModel;
@@ -43,6 +44,7 @@ public class ShowMenuFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         restaurantId = getArguments().getString("restaurant_id");
+        placesId=getArguments().getString("places_id");
     }
 
     @Override
@@ -55,9 +57,10 @@ public class ShowMenuFragment extends Fragment {
         viewModel.getRestaurantById(restaurantId).observe(getViewLifecycleOwner(), restaurant1 -> {
             restaurant = restaurant1;
             showRestaurantName.setText(restaurant1.name);
+            viewModel.getMenu().observe(getViewLifecycleOwner(), this::initRecyclerView);
+            viewModel.loadMenuForRestaurant(restaurant);
         });
-        viewModel.getMenu().observe(getViewLifecycleOwner(), this::initRecyclerView);
-        viewModel.readMenuForRestaurant(restaurantId);
+
         return v;
     }
 

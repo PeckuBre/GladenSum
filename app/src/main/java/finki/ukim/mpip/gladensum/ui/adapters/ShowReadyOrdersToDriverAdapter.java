@@ -1,5 +1,6 @@
 package finki.ukim.mpip.gladensum.ui.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,22 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import finki.ukim.mpip.gladensum.R;
+import finki.ukim.mpip.gladensum.classes.Driver;
 import finki.ukim.mpip.gladensum.classes.Order;
 import finki.ukim.mpip.gladensum.viewModels.DriverViewModel;
 
 public class ShowReadyOrdersToDriverAdapter extends RecyclerView.Adapter<ShowReadyOrdersToDriverAdapter.ViewHolder> {
 
-    private DriverViewModel viewModel;
     public List<Order> orders;
+    Driver driver;
+    DriverViewModel viewModel;
 
-    public ShowReadyOrdersToDriverAdapter(DriverViewModel viewModel){
+    public ShowReadyOrdersToDriverAdapter(List<Order> orders,Driver d,DriverViewModel viewModel){
+        this.orders=orders;
+        driver=d;
         this.viewModel=viewModel;
-        orders=viewModel.getReadyOrders().getValue();
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView address, cost,date;
+        public TextView address, date;
         public ConstraintLayout cl;
         public Button take;
 
@@ -50,9 +53,9 @@ public class ShowReadyOrdersToDriverAdapter extends RecyclerView.Adapter<ShowRea
     public void onBindViewHolder(@NonNull ShowReadyOrdersToDriverAdapter.ViewHolder holder, int position) {
         Order o = orders.get(position);
         holder.address.setText(o.address);
-        holder.date.setText(o.time.toString());
+        holder.date.setText(o.time.toDate().toString());
         holder.take.setOnClickListener(v -> {
-            viewModel.takeOrderItemAt(position);
+            viewModel.removePreparedOrderAt(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position,getItemCount());
         });

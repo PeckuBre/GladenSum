@@ -4,16 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -22,8 +22,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.libraries.places.api.model.RectangularBounds;
 
 import java.util.List;
 
@@ -34,6 +34,9 @@ import finki.ukim.mpip.gladensum.viewModels.DriverViewModel;
 public class ShowTakenOrdersOnMapFragment extends Fragment {
 
     private DriverViewModel viewModel;
+
+    private Button setOrderDeliveredButton;
+    Order selected_order;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -48,26 +51,43 @@ public class ShowTakenOrdersOnMapFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            zoomToCurrentLocation(googleMap, viewModel.getTakenOrders().getValue());
             viewModel.getTakenOrders().observe(getViewLifecycleOwner(), orders -> {
                 googleMap.clear();
                 for (Order o : orders) {
+                    if(o.latitude==null)
+                        continue;
+                    Log.d("Order taken: ",o.id);
                     LatLng latLng = new LatLng(o.latitude, o.longitude);
-                    googleMap.addMarker(new MarkerOptions().position(latLng).title(o.address));
+                    Marker marker=googleMap.addMarker(new MarkerOptions().position(latLng).title(o.address));
+                    marker.setTag(o);
                 }
-                zoomToCurrentLocation(googleMap);
+                googleMap.setOnMarkerClickListener(marker -> {
+                    marker.showInfoWindow();
+                    setOrderDeliveredButton.setEnabled(true);
+                    selected_order=(Order)marker.getTag();
+                    return true;
+                });
+
 
             });
-
         }
     };
 
-    private void zoomToCurrentLocation(GoogleMap map) {
+    private void zoomToCurrentLocation(GoogleMap map, List<Order> orders) {
         FusedLocationProviderClient locationProviderClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
         if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationProviderClient.getLastLocation().
-                    addOnSuccessListener(loc -> map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLatitude(), loc.getLongitude()), 13)));
+                    addOnSuccessListener(loc -> {
+                        if (loc != null)
+                            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLatitude(), loc.getLongitude()), 13));
+                        else if (orders.size() > 0) {
+                            Order o = orders.get(0);
+                            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(o.latitude, o.longitude), 13));
+                        }
+                    });
         }
     }
 
@@ -78,7 +98,16 @@ public class ShowTakenOrdersOnMapFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this.getActivity()).get(DriverViewModel.class);
-        return inflater.inflate(R.layout.fragment_show_taken_orders_on_map, container, false);
+        View root= inflater.inflate(R.layout.fragment_show_taken_orders_on_map, container, false);
+
+        setOrderDeliveredButton=root.findViewById(R.id.set_order_delivered_btn);
+        if(selected_order==null)
+            setOrderDeliveredButton.setEnabled(false);
+        setOrderDeliveredButton.setOnClickListener(v -> {
+            viewModel.removeTakenOrder(selected_order);
+        });
+
+        return root;
     }
 
     @Override

@@ -3,7 +3,7 @@ package finki.ukim.mpip.gladensum.classes;
 import java.util.HashMap;
 
 public class Restaurant extends AppUser {
-    public String name,address,phone_number,website,id;
+    public String name,address,phone_number,website,id,places_id;
     public Menu menu;
 
     public Restaurant() {

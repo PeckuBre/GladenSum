@@ -1,5 +1,6 @@
 package finki.ukim.mpip.gladensum.ui.driver_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import finki.ukim.mpip.gladensum.LoadingActivity;
 import finki.ukim.mpip.gladensum.R;
 
 /**
@@ -60,7 +65,14 @@ public class DriverAccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_driver_account, container, false);
+        View root= inflater.inflate(R.layout.fragment_driver_account, container, false);
+        Button signOutButton=root.findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(v->{
+            FirebaseAuth.getInstance().signOut();
+            Intent intent=new Intent(this.getContext(), LoadingActivity.class);
+            this.getActivity().finishAffinity();
+            startActivity(intent);
+        });
+        return root;
     }
 }

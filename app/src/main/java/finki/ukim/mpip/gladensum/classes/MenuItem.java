@@ -15,6 +15,7 @@ import java.util.Objects;
 public class MenuItem implements Serializable{
 
     public MenuItem(){}
+
     public String category,name,restaurant_id,id;
     public Float price;
 

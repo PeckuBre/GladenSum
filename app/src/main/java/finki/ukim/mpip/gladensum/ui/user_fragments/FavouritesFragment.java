@@ -1,4 +1,4 @@
-package finki.ukim.mpip.gladensum.ui.viewModels;
+package finki.ukim.mpip.gladensum.ui.user_fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

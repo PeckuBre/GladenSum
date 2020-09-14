@@ -21,6 +21,7 @@ public class DriverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver);
+        viewModel = new ViewModelProvider(this).get(DriverViewModel.class);
     }
 
     @Override
@@ -28,7 +29,6 @@ public class DriverActivity extends AppCompatActivity {
         super.onStart();
         setSupportActionBar(findViewById(R.id.my_toolbar));
         initNavigation();
-        viewModel = new ViewModelProvider(this).get(DriverViewModel.class);
     }
 
     private void initNavigation() {
